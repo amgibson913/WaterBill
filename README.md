@@ -15,7 +15,6 @@ Set up a crontab or other scheduler to run checkwaterbill.py as often as you're 
 [
     {
         "address": "123 Example St",
-        "previous_amount": "$80.00",
         "current_amount": "$.00",
         "date_changed": "03/27/20",
         "pushbullet_key": "YourPushBulletAPIKey"
