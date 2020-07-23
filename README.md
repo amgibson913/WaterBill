@@ -4,9 +4,8 @@ The current system for water bill payment in Baltimore City requires either wait
 
 ## Requirements
 * Python 3
-* Pushbullet.py python library
+* Pushbullet.py python library with API key set up on phone/computer, or outgoing mail server installed
 * Beautiful Soup 4 python library
-* Pushbullet set up on your phone and an API key generated
 
 ## Usage
 
@@ -17,7 +16,10 @@ Set up a crontab or other scheduler to run checkwaterbill.py as often as you're 
         "address": "123 Example St",
         "current_amount": "$.00",
         "date_changed": "03/27/20",
-        "pushbullet_key": "YourPushBulletAPIKey"
+        //Use pushbullet_key, email, or both to choose your outgoing message
+        //"pushbullet_key": "YourPushBulletAPIKey",
+        "email": "youremail@example.com"
     }
 ]
 ```
+Most phone carriers have a email to text option, such as verizon, allowing you to send mail to yournumber@vtext.com

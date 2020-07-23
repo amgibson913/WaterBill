@@ -3,12 +3,14 @@
 import urllib.request
 import urllib.parse
 from bs4 import BeautifulSoup
-import json
+import json, os
 from datetime import datetime
 from pushbullet import Pushbullet
 
+
 url = 'https://cityservices.baltimorecity.gov/water/'
 file = './waterbill.json'
+
 
 def checkBill(address):
 
@@ -37,6 +39,7 @@ def checkBill(address):
     print(f'Current balance is {bal}')
     return bal
 
+
 def pushbulletmsg(message, key):
     try:
         pb = Pushbullet(key)
@@ -46,6 +49,18 @@ def pushbulletmsg(message, key):
         push = pb.push_note("Waterbill", message)
         print(push)
     return
+
+
+def sendEmail(message, address):
+    os.system(f'echo "{message}" | mail -s "Waterbill" {address}')
+    return
+
+
+def sendMessage(message, home):
+    if 'pushbullet_key' in home: pushbulletmsg(message, home['pushbullet_key'])
+    if 'email' in home: sendEmail(message, home['email'])
+    if ('pushbullet_key' not in home and 'email' not in home):
+        print('Add email or pushbullet key to waterbill.json to send messages')
 
 
 if __name__ == "__main__":
@@ -65,13 +80,13 @@ if __name__ == "__main__":
                 home['date_changed'] = datetime.now().strftime("%x")
                 home['current_amount'] = balance
                 if balance == "$.00":
-                    pushbulletmsg("Your water bill has been paid", home['pushbullet_key'])
+                    sendMessage("Your water bill has been paid", home)
                 else:
-                    pushbulletmsg(f"Your new water bill is {balance}", home['pushbullet_key'])
+                    sendMessage(f"Your new water bill is {balance}", home)
             else:
                 days = (datetime.now()-datetime.strptime(home['date_changed'], "%x")).days
                 if days >= 5 and home['current_amount'] != "$.00":
-                    pushbulletmsg(f"Don't forget to pay your water bill of {balance}!", home['pushbullet_key'])
+                    sendMessage(f"Don't forget to pay your water bill of {balance}!", home)
 
     # Writes new values to the json json_file
     with open(file, "w") as json_file:
