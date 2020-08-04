@@ -9,7 +9,7 @@ from pushbullet import Pushbullet
 
 
 url = 'https://cityservices.baltimorecity.gov/water/'
-file = './waterbill.json'
+data_file = os.path.abspath(os.path.dirname(__file__)) + '/waterbill.json'
 
 
 def checkBill(address):
@@ -66,7 +66,7 @@ def sendMessage(message, home):
 if __name__ == "__main__":
 
     # Open and read a json file with address and previous bill amounts
-    with open(file, "r") as json_file:
+    with open(data_file, "r") as json_file:
         homes = json.load(json_file)
 
     # Cycle through addresses, check bill, and update json
@@ -82,12 +82,12 @@ if __name__ == "__main__":
                 if balance == "$.00":
                     sendMessage("Your water bill has been paid", home)
                 else:
-                    sendMessage(f"Your new water bill is {balance}", home)
+                    sendMessage(f"Your new water bill is \{balance}", home)
             else:
                 days = (datetime.now()-datetime.strptime(home['date_changed'], "%x")).days
                 if days >= 5 and home['current_amount'] != "$.00":
                     sendMessage(f"Don't forget to pay your water bill of {balance}!", home)
 
     # Writes new values to the json json_file
-    with open(file, "w") as json_file:
+    with open(data_file, "w") as json_file:
         json.dump(homes, json_file,indent=2)
