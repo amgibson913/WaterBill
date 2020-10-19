@@ -85,7 +85,7 @@ if __name__ == "__main__":
                     sendMessage(f"Your new water bill is \{balance}", home)
             else:
                 days = (datetime.now()-datetime.strptime(home['date_changed'], "%x")).days
-                if days >= 5 and home['current_amount'] != "$.00":
+                if days >= 5 and (days % 5) == 0 and home['current_amount'] != "$.00":
                     sendMessage(f"Don't forget to pay your water bill of {balance}!", home)
 
     # Writes new values to the json json_file
