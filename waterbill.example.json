@@ -3,12 +3,14 @@
       "address": "1101 Russell St",
       "current_amount": "$.00",
       "date_changed": "03/27/20",
-      "email": "123456789@vtext.com"
+      "email": "123456789@vtext.com",
+      "reminder_days": 5
     },
     {
       "address": "333 W Camden St",
       "current_amount": "$119.35",
       "date_changed": "08/04/20",
-      "email": "123456789@txt.att.net"
+      "email": "123456789@txt.att.net",
+      "reminder_days": 0
     }
   ]
