@@ -72,20 +72,35 @@ if __name__ == "__main__":
     # Cycle through addresses, check bill, and update json
     for home in homes:
         try:
-            balance = checkBill(home["address"])
+            balance = float(checkBill(home["address"])[1:])
         except:
             print("Error fetching current water bill")
         else:
             if balance != home['current_amount']:
-                home['date_changed'] = datetime.now().strftime("%x")
-                home['current_amount'] = balance
-                if balance == "$.00":
+                if balance == 0.0:
+                    home['history'] = [
+                        {
+                            "date": datetime.now().strftime("%x"),
+                            "change": "paid",
+                            "amount": home['current_amount']
+                        }
+                    ]
                     sendMessage("Your water bill has been paid", home)
                 else:
+                    newBill = {
+                        "date": datetime.now().strftime("%x"),
+                        "change": "billed",
+                        "amount": balance - home['current_amount']
+                    }
+                    home['history'].append(newBill)
                     sendMessage(f"Your new water bill is \{balance}", home)
+                
+                home['date_changed'] = datetime.now().strftime("%x")
+                home['current_amount'] = balance
+
             else:
                 days = (datetime.now()-datetime.strptime(home['date_changed'], "%x")).days
-                if days >= home['reminder_days'] and home['reminder_days'] != 0 and home['current_amount'] != "$.00":
+                if days >= home['reminder_days'] and home['reminder_days'] != 0 and home['current_amount'] != 0.0:
                     sendMessage(f"Don't forget to pay your water bill of {balance}!", home)
 
     # Writes new values to the json json_file

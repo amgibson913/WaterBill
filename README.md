@@ -16,10 +16,12 @@ Set up a crontab or other scheduler to run checkwaterbill.py as often as you're 
         "address": "123 Example St",
         "current_amount": "$.00",
         "date_changed": "03/27/20",
-        //Use pushbullet_key, email, or both to choose your outgoing message
-        //"pushbullet_key": "YourPushBulletAPIKey",
-        "email": "youremail@example.com"
+        "pushbullet_key": "YourPushBulletAPIKey",
+        "email": "youremail@example.com",
+        "history": []
     }
 ]
 ```
+The pushbullet key and email are both optional. Without them, the script will simply save bill history to the json file.
+
 Most phone carriers have a email to text option, such as verizon, allowing you to send mail to yournumber@vtext.com
