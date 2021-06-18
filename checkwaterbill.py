@@ -5,7 +5,6 @@ import urllib.parse
 from bs4 import BeautifulSoup
 import json, os
 from datetime import datetime
-from pushbullet import Pushbullet
 
 
 url = 'https://cityservices.baltimorecity.gov/water/'
@@ -57,7 +56,12 @@ def sendEmail(message, address):
 
 
 def sendMessage(message, home):
-    if 'pushbullet_key' in home: pushbulletmsg(message, home['pushbullet_key'])
+    if 'pushbullet_key' in home:
+        try:
+            from pushbullet import Pushbullet
+            pushbulletmsg(message, home['pushbullet_key'])
+        except ImportError:
+            print('Please install the pushbullet.py module to notify through pushbullet')
     if 'email' in home: sendEmail(message, home['email'])
     if ('pushbullet_key' not in home and 'email' not in home):
         print('Add email or pushbullet key to waterbill.json to send messages')
