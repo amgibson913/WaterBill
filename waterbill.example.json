@@ -1,17 +1,19 @@
 [
     {
       "address": "1101 Russell St",
-      "current_amount": "$.00",
+      "current_amount": 0.00,
       "date_changed": "03/27/20",
       "email": "123456789@vtext.com",
       "reminder_days": 5,
-      "output_file": "/home/user/WaterBill/output.json"
+      "output_file": "/home/user/WaterBill/output.json",
+      "history": []
     },
     {
       "address": "333 W Camden St",
-      "current_amount": "$119.35",
+      "current_amount": 120.89,
       "date_changed": "08/04/20",
       "email": "123456789@txt.att.net",
-      "reminder_days": 0
+      "reminder_days": 0,
+      "history": []
     }
   ]
