@@ -109,4 +109,4 @@ if __name__ == "__main__":
 
     # Writes new values to the json json_file
     with open(data_file, "w") as json_file:
-        json.dump(homes, json_file,indent=2)
+        json.dump(homes, json_file)
