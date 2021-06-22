@@ -10,7 +10,6 @@ from datetime import datetime
 url = 'https://cityservices.baltimorecity.gov/water/'
 data_file = os.path.abspath(os.path.dirname(__file__)) + '/waterbill.json'
 
-
 def checkBill(address):
 
     # Opens the city waterbill page
@@ -107,6 +106,10 @@ if __name__ == "__main__":
                 if days >= home['reminder_days'] and home['reminder_days'] != 0 and home['current_amount'] != 0.0:
                     sendMessage(f"Don't forget to pay your water bill of {balance}!", home)
 
+        if 'output_file' in home:
+            with open(home['output_file'], "w") as output_file:
+                json.dump({ "current": home['current_amount'], "history": home['history']}, output_file)
+
     # Writes new values to the json json_file
     with open(data_file, "w") as json_file:
-        json.dump(homes, json_file)
+        json.dump(homes, json_file, indent=2)

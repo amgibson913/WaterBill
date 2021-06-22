@@ -4,7 +4,8 @@
       "current_amount": "$.00",
       "date_changed": "03/27/20",
       "email": "123456789@vtext.com",
-      "reminder_days": 5
+      "reminder_days": 5,
+      "output_file": "/home/user/WaterBill/output.json"
     },
     {
       "address": "333 W Camden St",
